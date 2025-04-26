@@ -9,8 +9,8 @@ def use_regex(input_text):
     pattern = re.compile(r'/[^"]*\.js', re.IGNORECASE)
     return pattern.search(input_text).group()
 
-mainsite = mainsite.replace('/manifest.js','') # Hacky
-mainsite = mainsite.replace('recaptcha.net/recaptcha/api.js','') # Hacky
+mainsite = mainsite.replace('/manifest.js','') # Hacky prevent logging (would be better if i cleaned up html)
+mainsite = mainsite.replace('recaptcha.net/recaptcha/api.js','') # Hacky prevent logging (would be better if i cleaned up html)
 for line in mainsite.split('\n'):
     if '"/static/js' in line and '.js' in line:
         js_name = use_regex(line.strip())
