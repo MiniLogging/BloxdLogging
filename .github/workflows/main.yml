@@ -35,6 +35,7 @@ jobs:
       continue-on-error: true
       run: |
         git config --local user.name "Blox[bot]"
+        git config --local user.email "action@github.com"
         git pull origin main
         git add 'gamecode'
         git commit -F temp_commit.txt
