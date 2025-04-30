@@ -39,7 +39,7 @@ jobs:
         git pull origin main
         git add 'gamecode'
         git add 'chunks'
-        git commit -F temp_commit.txt
+        git commit -F temp_commit_message.txt
         git push origin main
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

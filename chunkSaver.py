@@ -1,4 +1,3 @@
-
 import requests,time
 
 def extract_data_between_quotes(lines):
@@ -41,11 +40,9 @@ def get_the_chunks(lines:str,prefix:str):
     lines_between = get_lines_between(lines)
     data_between_quotes = extract_data_between_quotes(lines_between)
 
-    #print number with each line
     for i, line in enumerate(data_between_quotes):
         print(f"{i+1}: {prefix}.{i+1}.{line}.chunk.js")
+        time.sleep(0.1)
         request = requests.get(f'https://bloxd.io/static/js/{prefix}.{i+1}.{line}.chunk.js')
-        # write to file
         with open(f'chunks/{i+1}.chunk.js', 'wb') as f:
             f.write(request.content)
-        time.sleep(0.1)

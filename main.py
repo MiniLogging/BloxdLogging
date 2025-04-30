@@ -1,5 +1,4 @@
-import re
-import jsbeautifier
+import re, jsbeautifier
 from requests import session
 requests = session()
 
@@ -38,7 +37,7 @@ with open('gamecode/main formatted.js','w', encoding="utf-8") as f:
     formatted_code = jsbeautifier.beautify(js_code)
     f.write(formatted_code)
 
-with open('temp_commit.txt','w') as f:
+with open('temp_commit_message.txt','w') as f:
     data = f'{changed_day} {js_name}'
     print(data)
     f.write(data)
