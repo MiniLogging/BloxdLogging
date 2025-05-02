@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkbloxd=self.webpackChunkbloxd||[]).push([[32],{11089:(d,m,g)=>{g.r(m),g.d(m,{passPixelShader:()=>D});const V="passPixelShader",u="varying vec2 vUV;uniform sampler2D textureSampler;\n#define CUSTOM_FRAGMENT_DEFINITIONS\nvoid main(void) \n{gl_FragColor=texture2D(textureSampler,vUV);}";g(1125).e.ShadersStore[V]=u;const D={name:V,shader:u}}}]);
