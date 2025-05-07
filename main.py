@@ -38,7 +38,7 @@ with open('gamecode/main formatted.js','w', encoding="utf-8") as f:
     formatted_code = jsbeautifier.beautify(js_code)
     f.write(formatted_code)
 
-with open('temp_commit.txt','w') as f:
+with open('temp_commit_message.txt','w') as f:
     import email.utils as utils
     parsed_time = utils.parsedate_to_datetime(changed_day)
     discord_timestamp = int(parsed_time.timestamp())
