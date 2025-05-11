@@ -2,10 +2,27 @@ import re, jsbeautifier
 from requests import session
 requests = session()
 
+def get_version(text: str): # Regex was made by GPT imma be honest
+    # Generic regex to catch ANY <obj>.d(<target>,{…=>VAR});const VAR=NUMBER
+    pattern = re.compile(
+        r'\b\w+\.d\(\s*\w+\s*,\s*\{[^}]*?=>\s*'   # anyObj.d(anyTarget,{…=> 
+        r'(?P<name>\w+)\s*'                       # capture the VAR name
+        r'\}\)\s*;\s*const\s+'                    # });const 
+        r'(?P=name)\s*=\s*'                       # same VAR=
+        r'(?P<ver>\d+)'                           # capture the VERSION
+    )
+    
+    m = pattern.search(text)
+    if not m:
+        print("Couldn't find the exported const version pattern!")
+        return '??', '?'
+    
+    return m["ver"]
+
 #region
 mainsite = requests.get('https://bloxd.io').text
 
-def use_regex(input_text):
+def get_js_regex(input_text):
     pattern = re.compile(r'/[^"]*\.js', re.IGNORECASE)
     return pattern.search(input_text).group()
 
@@ -14,7 +31,7 @@ mainsite = mainsite.replace('/manifest.js','')
 mainsite = mainsite.replace('recaptcha.net/recaptcha/api.js','')
 for line in mainsite.split('\n'):
     if '"/static/js' in line and '.js' in line:
-        js_name = use_regex(line.strip())
+        js_name = get_js_regex(line.strip())
         print(js_name.strip())
         link = f'https://bloxd.io{js_name}'
 
@@ -40,10 +57,11 @@ with open('gamecode/main formatted.js','w', encoding="utf-8") as f:
 
 with open('temp_commit_message.txt','w') as f:
     import email.utils as utils
+    version = get_version(js_code)
     parsed_time = utils.parsedate_to_datetime(changed_day)
     discord_timestamp = int(parsed_time.timestamp())
     formatted = f"<t:{discord_timestamp}>"
-    data = f'{formatted} {js_name}\n{changed_day}'
+    data = f'{formatted} v{version} {js_name.replace("/static/js/","")}\n{changed_day}'
     print(data)
     f.write(data)
 #endregion
